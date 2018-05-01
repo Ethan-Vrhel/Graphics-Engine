@@ -129,6 +129,6 @@ public final class GraphicsEngine {
 	}
 	
 	private void shutdown() {
-		destroy();
+		//destroy();
 	}
 }

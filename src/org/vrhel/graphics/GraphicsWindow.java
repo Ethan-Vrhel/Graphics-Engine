@@ -47,11 +47,11 @@ class GraphicsWindow implements Runnable {
 		win = new GraphicsWindow(config);
 	}
 	
-	synchronized static GraphicsWindow getWindow() {
+	static GraphicsWindow getWindow() {
 		return win;
 	}
 	
-	synchronized void destroy() {
+	void destroy() {
 		glfwSetWindowShouldClose(window, true);
 		while (alive) {
 			try {
@@ -80,7 +80,7 @@ class GraphicsWindow implements Runnable {
 	}
 	
 
-	synchronized void start() { 
+	void start() { 
 		validCreation = true;
 		windowThread = new Thread(this);
 		//windowThread.setPriority(Thread.NORM_PRIORITY);

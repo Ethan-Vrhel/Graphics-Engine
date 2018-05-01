@@ -6,7 +6,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * Contains methods and constants for detecting keypresses
  * or mouse events.  The values in this class are copied
  * from <code>org.lwjgl.glfw.GLFW</code>.  The static methods
- * will only work once GLFW has been initialized.
+ * will only work when GLFW is initialized.
  * 
  * @author Ethan Vrhel
  * @since 1.0
