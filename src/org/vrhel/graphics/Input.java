@@ -260,8 +260,12 @@ public class Input {
 	 * <code>false</code> otherwise.
 	 */
 	public static boolean getKey(int key) {
-		int ret = glfwGetKey(GraphicsWindow.getWindow().getWindowID(), key);
-		return ret == GLFW_TRUE;
+		try {
+			int ret = glfwGetKey(GraphicsWindow.getWindow().getWindowID(), key);
+			return ret == GLFW_TRUE;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	/**
@@ -272,8 +276,12 @@ public class Input {
 	 * <code>false</code> otherwise.
 	 */
 	public static boolean getMouse(int mouse) {
-		int ret = glfwGetMouseButton(GraphicsWindow.getWindow().getWindowID(), mouse);
-		return ret == GLFW_TRUE;
+		try {
+			int ret = glfwGetMouseButton(GraphicsWindow.getWindow().getWindowID(), mouse);
+			return ret == GLFW_TRUE;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	/**
@@ -284,6 +292,10 @@ public class Input {
 	 * and <code>false</code> otherwise.
 	 */
 	public static boolean mouseInWindow() {
-		return GraphicsWindow.getWindow().mouseInWindow();
+		try {
+			return GraphicsWindow.getWindow().mouseInWindow();
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

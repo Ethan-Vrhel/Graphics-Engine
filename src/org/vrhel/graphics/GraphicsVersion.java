@@ -13,7 +13,7 @@ public final class GraphicsVersion {
 	 */
 	public static final int VERSION_MAJOR = 1,
 							VERSION_MINOR = 1,
-							VERSION_REVISION = 0;
+							VERSION_REVISION = 1;
 	
 //	static {
 //		System.out.println("Running graphics version: " + getVersion());
