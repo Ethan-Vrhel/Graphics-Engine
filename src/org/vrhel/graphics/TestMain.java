@@ -48,14 +48,14 @@ public class TestMain implements Runnable, GraphicsListener {
 		t.setDaemon(true);
 		t.start();
 		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		GraphicsEngine.destroy();
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		GraphicsEngine.destroy();
 	}
 	
 	@Override
@@ -150,40 +150,15 @@ public class TestMain implements Runnable, GraphicsListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		float[] vertices = new float[] {
-			-0.5f, 0.5f, 0,	// 0
-			0.5f, 0.5f, 0,	// 1
-			0.5f, -0.5f, 0,	// 2
-			-0.5f, -0.5f, 0	// 3
-		};
+
+		VBOObject obj5;
 		
-		float[] texture = new float[] {
-			0, 0,
-			1, 0,
-			1, 1,
-			0, 1
-		};
-		TextureData data = new TextureData(texture, 1f, 0f, 0f);
-		data.transform();
+		obj = VBOObjectFactory.newObject(1f, 1f, -10, tex, new UseableShader(new TransformData(0, 0, 0, 256)), new TextureTransform());
+		obj2 = VBOObjectFactory.newObject(1f, 1f, 10, tex2, new UseableShader(new TransformData(0, 0, 0, 96)), new TextureTransform());
+		obj3 = VBOObjectFactory.newObject(1f, 1f, 10, tex3, new UseableShader(new TransformData(0, 0, 0, 128)), new TextureTransform());
+		obj4 = VBOObjectFactory.newObject(1f, 1f, 10, tex4, new UseableShader(new TransformData(0, 0, 0, 512)), new TextureTransform());
+		obj5 = VBOObjectFactory.newObject(1f, 1f, 0, tex5, new UseableShader(new TransformData(0, -1256, 0, 2048)), new TextureTransform());
 		
-		int[] indicies = new int[] {
-			0, 1, 2,
-			2, 3, 0
-		};
-//		AbstractShader[] shaders1 = {new DefaultShader(new TransformData(0, 0, 0, 256))};
-//		AbstractShader[] shaders2 = {new DefaultShader(new TransformData(512, 0, 0, 128))};
-//		ShaderStack stack1 = new ShaderStack(shaders1);
-//		ShaderStack stack2 = new ShaderStack(shaders2);
-		Model model = new Model(vertices, texture, indicies);
-		Model model2 = new Model(vertices, texture, indicies);
-		Model model3 = new Model(vertices, texture, indicies);
-		Model model4 = new Model(vertices, texture, indicies);
-		Model model5 = new Model(vertices, texture, indicies);
-		obj = new VBOObject(model, -10, tex, new UseableShader(new TransformData(0, 0, 0, 256)));
-		obj2 = new VBOObject(model2, 10, tex2, new UseableShader(new TransformData(0, 0, 0, 96)));
-		obj3 = new VBOObject(model3, 10, tex3, new UseableShader(new TransformData(0, 0, 0, 128)));
-		obj4 = new VBOObject(model4, 10, tex4, new UseableShader(new TransformData(0, 0, 0, 512)));
-		VBOObject obj5 = new VBOObject(model5, 0, tex5, new UseableShader(new TransformData(0, -1256, 0, 2048)));
 		obj.setShouldDraw(true);
 		obj2.setShouldDraw(true);
 		obj3.setShouldDraw(true);

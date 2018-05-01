@@ -12,12 +12,12 @@ public final class GraphicsVersion {
 	 * API Version
 	 */
 	public static final int VERSION_MAJOR = 1,
-							VERSION_MINOR = 0,
-							VERSION_REVISION = 1;
+							VERSION_MINOR = 1,
+							VERSION_REVISION = 0;
 	
-	static {
-		System.out.println("Running graphics version: " + getVersion());
-	}
+//	static {
+//		System.out.println("Running graphics version: " + getVersion());
+//	}
 	
 	private GraphicsVersion() { } 
 	

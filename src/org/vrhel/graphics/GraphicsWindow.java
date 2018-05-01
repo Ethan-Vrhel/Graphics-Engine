@@ -43,7 +43,7 @@ class GraphicsWindow implements Runnable {
 	synchronized static void create(GraphicsConfiguration config) throws UnsupportedOperationException {
 		if (win != null)
 			throw new UnsupportedOperationException("A window is already in use");
-		System.out.println("Running: LWJGL " + Version.getVersion() + "!");
+		//System.out.println("Running: LWJGL " + Version.getVersion() + "!");
 		win = new GraphicsWindow(config);
 	}
 	
