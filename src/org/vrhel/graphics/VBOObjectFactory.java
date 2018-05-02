@@ -63,4 +63,13 @@ public final class VBOObjectFactory {
 	public static VBOObject newObject(float width, float height, int zBuffer) {
 		return newObject(width, height, zBuffer, null, null, null);
 	}
+	
+	/**
+	 * Creates a new <code>VBOObject</code>.
+	 * 
+	 * @return The new <code>VBOObject</code>.
+	 */
+	public static VBOObject newObject() {
+		return newObject(1f, 1f, 0, null, null, null);
+	}
 }
