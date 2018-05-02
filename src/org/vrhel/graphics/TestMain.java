@@ -30,7 +30,7 @@ public class TestMain implements Runnable, GraphicsListener {
 	@Deprecated
 	public static void main(String[] args) {
 		init(new GraphicsConfiguration(
-				new WindowProperties("test", new Dimension(1280, 720), false, true), 
+				new WindowProperties(null, new Dimension(1280, 720), false, true), 
 				GraphicsConfiguration.SuggestedType.Dimension2));
 		engine = getEngine();
 		TestMain main = new TestMain();

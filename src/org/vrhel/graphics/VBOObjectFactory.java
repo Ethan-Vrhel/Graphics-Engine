@@ -72,4 +72,32 @@ public final class VBOObjectFactory {
 	public static VBOObject newObject() {
 		return newObject(1f, 1f, 0, null, null, null);
 	}
+	
+	/**
+	 * Creates a new <code>VBOObject</code>.
+	 * 
+	 * @param shape The shape.
+	 * @param param The parameters.
+	 * @param zBuffer The z-buffer.
+	 * @param tex The texture.
+	 * @param shader The shader.
+	 * @return The new <code>VBOObject</code>.
+	 */
+	public static VBOObject newObject(Shape shape, ShapeParameters param, int zBuffer, Texture2D tex, UseableShader shader) {
+		Model model = ModelFactory.newModel(shape, param);
+		return new VBOObject(model, zBuffer, tex, shader);
+	}
+	
+	/**
+	 * Creates a new <code>VBOObject</code>.
+	 * 
+	 * @param shape The shape.
+	 * @param param The parameters.
+	 * @param zBuffer The z-buffer.
+	 * @return The new <code>VBOObject</code>.
+	 */
+	public static VBOObject newObject(Shape shape, ShapeParameters param, int zBuffer) {
+		Model model = ModelFactory.newModel(shape, param);
+		return new VBOObject(model, zBuffer);
+	}
 }

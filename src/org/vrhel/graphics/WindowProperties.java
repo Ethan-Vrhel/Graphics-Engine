@@ -16,7 +16,8 @@ import org.lwjgl.Version;
  */
 public class WindowProperties {
 	
-	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private static final Dimension 	screenSize 	= Toolkit.getDefaultToolkit().getScreenSize();
+	private static final String		defaultName	= "LWJGL " + Version.getVersion() + " - Graphics Engine " + GraphicsVersion.getVersion();
 	
 	/**
 	 * Constant representing the native resolution.
@@ -38,6 +39,8 @@ public class WindowProperties {
 	 * @param vysnc Whether to use vertical synchronization.
 	 */
 	public WindowProperties(String name, Dimension resolution, boolean fullscreen, boolean vsync) {
+		if (name == null)
+			name = defaultName;
 		this.name = name;
 		this.resolution = resolution;
 		this.fullscreen = fullscreen;
@@ -50,7 +53,7 @@ public class WindowProperties {
 	 * Creates the default window properties.
 	 */
 	public WindowProperties() {
-		this("LWJGL " + Version.getVersion() + " - Graphics Engine " + GraphicsVersion.getVersion(), new Dimension(1280, 720), false, false);
+		this(defaultName, new Dimension(1280, 720), false, true);
 	}
 	
 	/**

@@ -47,4 +47,18 @@ public class ModelFactory {
 		Model model = new Model(vertices, texture, indicies);
 		return model;
 	}
+	
+	/**
+	 * Creates a new <code>Model</code>.
+	 * 
+	 * @param shape The shape.
+	 * @param param The shape parameters.
+	 * @return The new <code>Model</code>.
+	 */
+	public static Model newModel(Shape shape, ShapeParameters param) {
+		float[] vertices = shape.toVertices(param);
+		float[] texture = shape.toTexture(param);
+		int[] indicies = shape.toIndicies(param);
+		return new Model(vertices, texture, indicies);
+	}
 }
