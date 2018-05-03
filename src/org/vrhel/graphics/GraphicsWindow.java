@@ -52,16 +52,21 @@ class GraphicsWindow implements Runnable {
 	}
 	
 	void destroy() {
-		glfwSetWindowShouldClose(window, true);
-		while (alive) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			glfwSetWindowShouldClose(window, true);
+		} catch (NullPointerException e) {
+			alive = false;
+		} finally {
+			while (alive) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			win = null;
 		}
-		win = null;
 	}
 	
 	synchronized void updateConfiguration(GraphicsConfiguration config) {
