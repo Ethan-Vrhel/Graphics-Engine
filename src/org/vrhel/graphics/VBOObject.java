@@ -67,4 +67,11 @@ public final class VBOObject extends RenderableObject {
 			model.render();
 		}
 	}
+
+	@Override
+	void destroy() {
+		model = null;
+		tex = null;
+		shader = null;
+	}
 }

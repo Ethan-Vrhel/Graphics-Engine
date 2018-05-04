@@ -4,10 +4,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/db/res/joml/joml-1.9.9.jar"/>
 	<classpathentry kind="lib" path="C:/db/res/lwjgl/lwjgl.jar"/>
-	<classpathentry kind="lib" path="C:/db/res/lwjgl/lwjgl-assimp-natives-windows.jar"/>
 	<classpathentry kind="lib" path="C:/db/res/lwjgl/lwjgl-glfw.jar"/>
 	<classpathentry kind="lib" path="C:/db/res/lwjgl/lwjgl-glfw-natives-windows.jar"/>
 	<classpathentry kind="lib" path="C:/db/res/lwjgl/lwjgl-opengl.jar"/>
 	<classpathentry kind="lib" path="C:/db/res/lwjgl/lwjgl-opengl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="C:/db/res/lwjgl/lwjgl-natives-windows.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

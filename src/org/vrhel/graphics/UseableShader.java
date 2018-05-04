@@ -12,7 +12,7 @@ package org.vrhel.graphics;
  * @author Ethan Vrhel
  * @since 1.0
  */
-public final class UseableShader {
+public final class UseableShader extends GraphicsObject {
 	
 	public static final int DEFAULT_SHADER_LOCATION = 0;
 
@@ -89,5 +89,10 @@ public final class UseableShader {
 	@Override
 	public String toString() {
 		return getClass() + " (contains " + stackLength() + " shaders)";
+	}
+
+	@Override
+	void destroy() {
+		stack = null;
 	}
 }

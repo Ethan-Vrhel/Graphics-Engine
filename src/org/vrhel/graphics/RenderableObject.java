@@ -9,7 +9,7 @@ import java.util.Comparator;
  * @author Ethan Vrhel
  * @since 1.0
  */
-abstract class RenderableObject implements Cloneable, Comparator<RenderableObject> {
+abstract class RenderableObject extends GraphicsObject implements Cloneable, Comparator<RenderableObject> {
 
 	private static int nextID = 0;
 	
@@ -158,4 +158,7 @@ abstract class RenderableObject implements Cloneable, Comparator<RenderableObjec
 	 * Draws the object.
 	 */
 	abstract void render();
+	
+	@Override
+	abstract void destroy();
 }

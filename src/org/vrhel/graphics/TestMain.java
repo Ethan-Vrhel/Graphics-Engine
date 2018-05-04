@@ -47,7 +47,7 @@ public class TestMain implements Runnable, GraphicsListener {
 		t = new Thread(main);
 		t.setDaemon(true);
 		t.start();
-		
+
 //		try {
 //			Thread.sleep(2000);
 //		} catch (InterruptedException e) {
@@ -103,6 +103,10 @@ public class TestMain implements Runnable, GraphicsListener {
 				
 			}
 			//System.out.println(engine.getFPS());
+			
+			if (Input.getKey(Input.GLFW_KEY_P)) {
+				GraphicsEngine.destroy();
+			}
 		}
 	}
 
@@ -164,7 +168,6 @@ public class TestMain implements Runnable, GraphicsListener {
 		obj3.setShouldDraw(true);
 		obj4.setShouldDraw(true);
 		obj5.setShouldDraw(true);
-		//t.start();
 	}
 
 	@Override

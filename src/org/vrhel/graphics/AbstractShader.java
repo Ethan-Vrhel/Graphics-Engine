@@ -7,7 +7,7 @@ package org.vrhel.graphics;
  * @author Ethan Vrhel
  * @since 1.0
  */
-public abstract class AbstractShader {
+public abstract class AbstractShader extends GraphicsObject {
 
 	/**
 	 * The bound shader.
@@ -28,6 +28,11 @@ public abstract class AbstractShader {
 	
 	final void bind() {
 		shader.bind();
+	}
+	
+	@Override
+	final void destroy() {
+		shader = null;
 	}
 	
 	/**

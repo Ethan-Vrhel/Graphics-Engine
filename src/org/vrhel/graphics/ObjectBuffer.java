@@ -41,7 +41,9 @@ class ObjectBuffer {
 	}
 	
 	private void destroy() {
+		objs.removeAll(objs);
 		objs = null;
+		buffer = null;
 	}
 
 	void add(RenderableObject obj) {

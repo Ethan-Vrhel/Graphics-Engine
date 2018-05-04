@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-class GraphicsWindow implements Runnable {
+class GraphicsWindow extends GraphicsObject implements Runnable {
 
 	private static GraphicsWindow win;
 	
@@ -31,6 +31,8 @@ class GraphicsWindow implements Runnable {
 	private ArrayList<GraphicsListener> listeners;
 	
 	Camera camera;
+	
+	private boolean doneInit = false;
 	
 	private GraphicsWindow(GraphicsConfiguration config) {
 		this.config = config;
@@ -263,6 +265,7 @@ class GraphicsWindow implements Runnable {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 		
+		doneInit = true;
 		while (! glfwWindowShouldClose(window)) {
 			long start = System.nanoTime();
 			
@@ -313,5 +316,9 @@ class GraphicsWindow implements Runnable {
 	
 	long getWindowID() {
 		return window;
+	}
+	
+	boolean initialized() {
+		return doneInit;
 	}
 }

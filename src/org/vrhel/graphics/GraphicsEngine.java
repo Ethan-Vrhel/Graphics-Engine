@@ -39,6 +39,7 @@ public final class GraphicsEngine {
 	public static void init(GraphicsConfiguration config) throws UnsupportedOperationException {
 		if (engine != null)
 			throw new UnsupportedOperationException("Two graphics engines cannot be created at the same time");
+		GraphicsObject.create();
 		
 		if (config == null)
 			config = defaultConfig;
@@ -54,8 +55,7 @@ public final class GraphicsEngine {
 	 */
 	public static void destroy() {
 		if (engine != null) {
-			engine.window.destroy();
-			engine.shutdown();
+			GraphicsObject.destroyAll();
 			engine = null;
 			System.gc();
 		}
@@ -126,6 +126,18 @@ public final class GraphicsEngine {
 		GraphicsWindow.create(config);
 		window = GraphicsWindow.getWindow();
 		window.start();
+	}
+	
+	/**
+	 * Returns whether or not the engine is ready to create
+	 * OpenGL related objects such as a <code>VBOObject</code>.
+	 * 
+	 * @return <code>true</code> if it is ready and 
+	 * <code>false</code> otherwise.
+	 */
+	public boolean ready() {
+		boolean win = window.initialized();
+		return win;
 	}
 	
 	private void shutdown() {

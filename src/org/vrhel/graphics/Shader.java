@@ -26,6 +26,9 @@ public class Shader {
 	 * @param filename The file name.
 	 */
 	public Shader(String filename) {
+		if (GraphicsEngine.getEngine() == null)
+			throw new UnsupportedOperationException("Engine has not been initialized");
+		
 		program = glCreateProgram();
 		vs = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vs, readFile(filename + ".vs"));

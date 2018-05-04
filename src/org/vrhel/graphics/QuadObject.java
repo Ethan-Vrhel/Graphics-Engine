@@ -46,7 +46,7 @@ public final class QuadObject extends RenderableObject {
 
 	@Override
 	void render() {
-		texture.bind(-1);
+		texture.bind();
 		glBegin(GL_QUADS);
 			glTexCoord2f(0, 0);
 			glVertex2f(data.getX(), data.getY());
@@ -57,5 +57,11 @@ public final class QuadObject extends RenderableObject {
 			glTexCoord2f(1, 0);
 			glVertex2f(data.getX() + width, data.getY());
 		glEnd();
+	}
+
+	@Override
+	void destroy() {
+		texture = null;
+		data = null;
 	}
 }
