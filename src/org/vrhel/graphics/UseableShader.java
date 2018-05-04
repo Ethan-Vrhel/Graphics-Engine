@@ -43,6 +43,8 @@ public final class UseableShader extends GraphicsObject {
 	 * @param data The transformation data.
 	 */
 	public UseableShader(TransformData data) {
+		if (data == null)
+			data = new TransformData(0, 0, 0, 1);
 		this.stack = new AbstractShader[1];
 		this.stack[0] = new DefaultShader(data);
 	}

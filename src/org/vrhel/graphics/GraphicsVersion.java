@@ -7,10 +7,6 @@ package org.vrhel.graphics;
  * @since 1.0
  */
 public final class GraphicsVersion {
-	
-	static {
-		System.out.println(getVersion());
-	}
 
 	/**
 	 * API Version
@@ -22,7 +18,7 @@ public final class GraphicsVersion {
 	/**
 	 * The modifier of the version.
 	 */
-	public static final String	MODIFIER			= "pre-5";
+	public static final String	MODIFIER			= "pre-6";
 	
 //	static {
 //		System.out.println("Running graphics version: " + getVersion());
@@ -36,10 +32,9 @@ public final class GraphicsVersion {
 	 * 
 	 * @return The <code>String</code> representation.
 	 */
-	@SuppressWarnings("unused")
 	public static String getVersion() {
 		String ret = VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_REVISION;
-		if (MODIFIER != "")
+		if (! MODIFIER.equals(""))
 			return ret + "-" + MODIFIER;
 		else
 			return ret;
