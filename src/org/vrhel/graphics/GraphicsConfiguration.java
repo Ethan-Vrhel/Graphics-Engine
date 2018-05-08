@@ -71,4 +71,24 @@ public class GraphicsConfiguration {
 		 */
 		Dimension3;
 	}
+	
+	/**
+	 * Enumerated types that specify the
+	 * rendering path the engine should take.
+	 * 
+	 * @author Ethan Vrhel
+	 * @since 1.1
+	 */
+	@Useless
+	public static enum RenderingType {
+		/**
+		 * Specifies forward rendering.
+		 */
+		Forward,
+		
+		/**
+		 * Specifies deferred rendering.
+		 */
+		Deferred;
+	}
 }
