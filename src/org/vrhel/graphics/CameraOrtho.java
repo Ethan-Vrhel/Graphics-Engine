@@ -23,17 +23,6 @@ public class CameraOrtho extends Camera {
 		projection = new Matrix4f().setOrtho2D(-width / 2, width / 2, -height / 2, height / 2);		
 	}
 	
-	/**
-	 * Sets the position of the camera.
-	 * 
-	 * @param x The x position.
-	 * @param y The y position.
-	 * @param z The z position.
-	 */
-	public void setPosition(float x, float y, float z) {
-		position = new Vector3f(x, y, z);
-	}
-
 	@Override
 	Matrix4f projection() {
 		Matrix4f target = new Matrix4f();
