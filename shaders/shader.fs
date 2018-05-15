@@ -10,7 +10,8 @@ varying vec2 tex_coords;
 void applyTexOrtho();
 void applyTexPersp();
 
-void main() {
+void main() 
+{
 	//gl_FragColor = texture2D(sampler, tex_coords);
 	if (type == 0)
 		applyTexOrtho();
@@ -18,10 +19,12 @@ void main() {
 		applyTexPersp();
 }
 
-void applyTexOrtho() {
+void applyTexOrtho() 
+{
 	gl_FragColor = texture2D(sampler, tex_coords);
 }
 
-void applyTexPersp() {
+void applyTexPersp() 
+{
 
 }

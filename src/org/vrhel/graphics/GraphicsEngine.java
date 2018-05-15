@@ -116,6 +116,26 @@ public final class GraphicsEngine {
 	}
 	
 	/**
+	 * Returns the <code>Camera</code> currently
+	 * being used by the engine.
+	 * 
+	 * @return The <code>Camera</code>.
+	 */
+	public Camera getCamera() {
+		return window.camera;
+	}
+	
+	/**
+	 * Sets the <code>Camera</code> to be used
+	 * by the engine.
+	 * 
+	 * @param camera The camera.
+	 */
+	public void setCamera(Camera camera) {
+		window.camera = camera;
+	}
+	
+	/**
 	 * Updates the configuration associated with the current
 	 * running window.
 	 * 

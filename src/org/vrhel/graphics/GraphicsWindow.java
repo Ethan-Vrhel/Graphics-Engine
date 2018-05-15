@@ -30,7 +30,7 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 	
 	private ArrayList<GraphicsListener> listeners;
 	
-	Camera camera;
+	volatile Camera camera;
 	
 	private boolean doneInit = false;
 	
@@ -208,49 +208,6 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 		camera = new CameraOrtho((int) config.getWindowProperties().getResolution().getWidth(), 
 				(int) config.getWindowProperties().getResolution().getHeight());
 		
-//		float[] vertices = new float[] {
-//			-0.5f, 0.5f, 0,	// 0
-//			0.5f, 0.5f, 0,	// 1
-//			0.5f, -0.5f, 0,	// 2
-//			-0.5f, -0.5f, 0	// 3
-//		};
-//		
-//		float[] texture = new float[] {
-//			0, 0,
-//			1, 0,
-//			1, 1,
-//			0, 1
-//		};
-//		TextureData data = new TextureData(texture, 1f, 0f, 0f);
-//		data.transform();
-//		
-//		int[] indicies = new int[] {
-//			0, 1, 2,
-//			2, 3, 0
-//		};
-		
-//		Model model = new Model(vertices, texture, indicies);
-//		
-//		Matrix4f scale = new Matrix4f()
-//				.translate(new Vector3f(100, 0, 0))
-//				.scale(256);
-//		Matrix4f target = new Matrix4f();
-// 
-//		
-//		Texture2D tex2 = null;
-//		try {
-//			tex2 = new Texture2D("res\\tex.png", Texture.NEAREST);
-//		} catch (IOException e) {
-//			e.printStackTrace(System.err);
-//		}
-//		
-//		Texture2D tex = null;
-//		try {
-//			tex = new Texture2D("res\\tex2.png", Texture.NEAREST);
-//		} catch (IOException e) {
-//			e.printStackTrace(System.err);
-//		}
-		
 		camera.setPositon(new Vector3f(0, 0, 0));
 		
 		// Run the rendering loop until the user has attempted to close
@@ -273,14 +230,6 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 			if (camera != null) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 				
-				//target = scale;
-							
-				//tex.bind();
-//				Shader.defaultShader.setUniform("sampler", 1);
-//				Shader.defaultShader.setUniform("projection", camera.projection().mul(target));
-//				//tex.bind(0);
-//				tex2.bind(1);
-//				Shader.defaultShader.bind();
 				render();
 				
 				glfwSwapBuffers(window);

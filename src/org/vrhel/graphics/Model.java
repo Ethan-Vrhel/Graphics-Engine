@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 
 /**
  * The <code>Model</code> class represents a
@@ -79,6 +80,28 @@ public class Model implements Cloneable {
 	 */
 	public int height() {
 		return height;
+	}
+	
+	/**
+	 * Rotates the model.
+	 * 
+	 * @param angle The angle to rotate..
+	 * @param xaxis Specifies the x axis to rotate around.
+	 * Must be in the range of 0 to 1.
+	 * @param yaxis Specifies the y axis to rotate around.
+	 * Must be in the range of 0 to 1.
+	 * @param zaxis Specifies the z axis to rotate around.
+	 * Must be in the range of 0 to 1.
+	 */
+	public void rotate(float angle, float xaxis, float yaxis, float zaxis) {
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, v_id);
+		glRotatef(angle, xaxis, yaxis, zaxis);
+		
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 	}
 	
 	void render() {

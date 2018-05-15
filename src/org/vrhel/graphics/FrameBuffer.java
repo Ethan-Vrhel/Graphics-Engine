@@ -16,6 +16,8 @@ final class FrameBuffer {
 		tex = glGenTextures();
 		depth = glGenRenderbuffersEXT();
 		
+		
+		
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);                        // switch to the new framebuffer
 	     
         // initialize color texture
@@ -31,6 +33,13 @@ final class FrameBuffer {
         glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT,GL_DEPTH_ATTACHMENT_EXT,GL_RENDERBUFFER_EXT, depth); // bind it to the renderbuffer
  
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);                                    // Swithch back to normal framebuffer rendering
+	}
+	
+	void testRender(Model model, Texture2D tex) {
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);
+		tex.bind();
+		model.render();
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 	}
 	
 	void bind() {
