@@ -136,6 +136,16 @@ public final class GraphicsEngine {
 	}
 	
 	/**
+	 * Sets the <code>RenderListener</code> to be used
+	 * by the engine.
+	 * 
+	 * @param list The listener.
+	 */
+	public void setRenderListener(RenderListener list) {
+		ObjectBuffer.getBuffer().list = list;
+	}
+	
+	/**
 	 * Updates the configuration associated with the current
 	 * running window.
 	 * 
@@ -158,9 +168,5 @@ public final class GraphicsEngine {
 	public boolean ready() {
 		boolean win = window.initialized();
 		return win;
-	}
-	
-	private void shutdown() {
-		//destroy();
 	}
 }

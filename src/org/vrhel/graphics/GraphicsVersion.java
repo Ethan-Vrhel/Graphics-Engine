@@ -12,13 +12,13 @@ public final class GraphicsVersion {
 	 * API Version
 	 */
 	public static final int 	VERSION_MAJOR 		= 1,
-								VERSION_MINOR 		= 1,
-								VERSION_REVISION	= 4;
+								VERSION_MINOR 		= 2,
+								VERSION_REVISION	= 0;
 	
 	/**
 	 * The modifier of the version.
 	 */
-	public static final String	MODIFIER			= "pre-3";
+	public static final String	MODIFIER			= "pre-1";
 	
 //	static {
 //		System.out.println("Running graphics version: " + getVersion());

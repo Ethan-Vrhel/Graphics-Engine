@@ -20,6 +20,8 @@ class ObjectBuffer {
 	
 	private ArrayList<RenderableObject> objs;
 	
+	RenderListener list;
+	
 	private ObjectBuffer() {
 		objs = new ArrayList<RenderableObject>();
 	}
@@ -84,6 +86,9 @@ class ObjectBuffer {
 	}
 	
 	void render() {
+		if (list != null)
+			list.update();
+		
 		if (CULL_ON_UPDATE)
 			cull();
 		if (SORT_ON_UPDATE)
