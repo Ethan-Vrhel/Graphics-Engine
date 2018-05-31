@@ -13,7 +13,7 @@ import org.lwjgl.BufferUtils;
 
 public class Shader {
 
-	static final Shader defaultShader = new Shader("shader");
+	static final Shader defaultShader = new Shader(new String[] {"shader"});
 	
 	private int program;
 	private int vs;
@@ -25,32 +25,34 @@ public class Shader {
 	 * 
 	 * @param filename The file name.
 	 */
-	public Shader(String filename) {
+	public Shader(String[] files) {
 		if (GraphicsEngine.getEngine() == null)
 			throw new UnsupportedOperationException("Engine has not been initialized");
 		
 		program = glCreateProgram();
-		vs = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vs, readFile(filename + ".vs"));
-		glCompileShader(vs);
-		if (glGetShaderi(vs, GL_COMPILE_STATUS) != 1) {
-			System.err.println(glGetShaderInfoLog(vs));
-			System.exit(1);
+		for (int i = 0; i < files.length; i++) {
+			vs = glCreateShader(GL_VERTEX_SHADER);
+			glShaderSource(vs, readFile(files[i] + ".vs"));
+			glCompileShader(vs);
+			if (glGetShaderi(vs, GL_COMPILE_STATUS) != 1) {
+				System.err.println(glGetShaderInfoLog(vs));
+				System.exit(1);
+			}
+			
+			fs = glCreateShader(GL_FRAGMENT_SHADER);
+			glShaderSource(fs, readFile(files[i] + ".fs"));
+			glCompileShader(fs);
+			if (glGetShaderi(fs, GL_COMPILE_STATUS) != 1) {
+				System.err.println(glGetShaderInfoLog(fs));
+				System.exit(1);
+			}
+			
+			glAttachShader(program, vs);
+			glAttachShader(program, fs);
+			
+			glBindAttribLocation(program, 0, "vertices");
+			glBindAttribLocation(program, 1, "textures");
 		}
-		
-		fs = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fs, readFile(filename + ".fs"));
-		glCompileShader(fs);
-		if (glGetShaderi(fs, GL_COMPILE_STATUS) != 1) {
-			System.err.println(glGetShaderInfoLog(fs));
-			System.exit(1);
-		}
-		
-		glAttachShader(program, vs);
-		glAttachShader(program, fs);
-		
-		glBindAttribLocation(program, 0, "vertices");
-		glBindAttribLocation(program, 1, "textures");
 		
 		glLinkProgram(program);
 		if (glGetProgrami(program, GL_LINK_STATUS) != 1) {
