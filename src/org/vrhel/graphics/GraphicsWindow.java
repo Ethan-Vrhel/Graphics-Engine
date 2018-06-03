@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.EXTFramebufferObject.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
@@ -222,15 +224,35 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 		
+		int w = properties.getResolution().width;
+		int h = properties.getResolution().height;
+		RenderBuffer ren = new RenderBuffer(w, h, GL_RGBA);
+		FrameBuffer buff = new FrameBuffer();
+		buff.attach(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ren);
+		
 		doneInit = true;
 		while (! glfwWindowShouldClose(window)) {
 			long start = System.nanoTime();
 			
 			
 			if (camera != null) {
+				buff.bind(GL_DRAW_FRAMEBUFFER);
+				//glViewport(0, 0, w, h);
+
+				buff.bind(GL_DRAW_FRAMEBUFFER);
+				buff.unbind(GL_READ_FRAMEBUFFER);
+				glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+				render();
+				buff.bind(GL_READ_FRAMEBUFFER);
+				buff.unbind(GL_DRAW_FRAMEBUFFER);
+				
+				//glViewport(0, 0, properties.getResolution().width, properties.getResolution().height);
+				glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 				
-				render();
+				glBlitFramebuffer(0, 0, w, h, 0, 0, w, h,
+						GL_COLOR_BUFFER_BIT, GL_NEAREST);
 				
 				glfwSwapBuffers(window);
 			}

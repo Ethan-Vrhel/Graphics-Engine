@@ -23,7 +23,8 @@ public class Shader {
 	 * Creates a new <code>Shader</code> from a 
 	 * file.
 	 * 
-	 * @param filename The file name.
+	 * @param filename The file name index <code>0</code>
+	 * must be the <code>defaultShader</code>.
 	 */
 	public Shader(String[] files) {
 		if (GraphicsEngine.getEngine() == null)

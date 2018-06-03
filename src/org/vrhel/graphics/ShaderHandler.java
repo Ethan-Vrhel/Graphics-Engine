@@ -21,7 +21,9 @@ public class ShaderHandler {
 	private File defaultFragmentShader;
 	private File defaultVertexShader;
 
+	@SuppressWarnings("unused")
 	private File newFragmentShader;
+	@SuppressWarnings("unused")
 	private File newVertexShader;
 
 	private ArrayList<AbstractShader> shaderStack;
@@ -77,15 +79,17 @@ public class ShaderHandler {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private static class ShaderField {
 		
 		private String[] fieldTypes;
 		
 		ShaderField(String[] fields) {
-			this.fieldTypes = fieldTypes;
+			this.fieldTypes = fields;
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private static class ShaderMethod {
 		
 		private String methodName;
@@ -97,6 +101,7 @@ public class ShaderHandler {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void read() throws IOException {
 		
 	}
