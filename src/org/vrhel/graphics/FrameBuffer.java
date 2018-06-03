@@ -8,6 +8,7 @@ final class FrameBuffer {
 	
 	FrameBuffer() {
 		fbo = glGenFramebuffers();
+		System.out.println("Genreated framebuffer: " + fbo);
 	}
 	
 	void bind(int type) {
@@ -22,16 +23,16 @@ final class FrameBuffer {
 		return fbo;
 	}
 	
-	void attach(int target, int attach, RenderBuffer buffer) {
-		attach(target, attach, buffer.getRenderBuffer());
+	void attachRenderbuffer(int target, int attach, RenderBuffer buffer) {
+		attachRenderbuffer(target, attach, buffer.getRenderBuffer());
 	}
 	
-	void attach(int target, int attach, int rbo) {
+	void attachRenderbuffer(int target, int attach, int rbo) {
 		bind(GL_FRAMEBUFFER);
 		glFramebufferRenderbuffer(target, attach, GL_RENDERBUFFER, rbo);
 	}
 	
-	void detach(int target, int attach) {
+	void detachRenderbuffer(int target, int attach) {
 		bind(GL_FRAMEBUFFER);
 		glFramebufferRenderbuffer(target, attach, GL_RENDERBUFFER, 0);
 	}

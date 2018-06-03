@@ -228,7 +228,7 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 		int h = properties.getResolution().height;
 		RenderBuffer ren = new RenderBuffer(w, h, GL_RGBA);
 		FrameBuffer buff = new FrameBuffer();
-		buff.attach(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ren);
+		buff.attachRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ren);
 		
 		doneInit = true;
 		while (! glfwWindowShouldClose(window)) {
@@ -237,18 +237,15 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 			
 			if (camera != null) {
 				buff.bind(GL_DRAW_FRAMEBUFFER);
-				//glViewport(0, 0, w, h);
-
-				buff.bind(GL_DRAW_FRAMEBUFFER);
-				buff.unbind(GL_READ_FRAMEBUFFER);
-				glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+	
+				glClear(GL_COLOR_BUFFER_BIT);
 				render();
+
+				
 				buff.bind(GL_READ_FRAMEBUFFER);
 				buff.unbind(GL_DRAW_FRAMEBUFFER);
-				
-				//glViewport(0, 0, properties.getResolution().width, properties.getResolution().height);
-				glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+
+				glClearColor(0.5f, 0.5f, 1f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 				
 				glBlitFramebuffer(0, 0, w, h, 0, 0, w, h,

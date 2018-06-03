@@ -9,7 +9,8 @@ final class RenderBuffer {
 	RenderBuffer(int width, int height, int format) {
 		rbo = glGenRenderbuffers();
 		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-		glRenderbufferStorage(rbo, format, width, height);
+		glRenderbufferStorage(GL_RENDERBUFFER, format, width, height);
+		System.out.println("Genreated renderbuffer: " + rbo + " | size: " + width + "x" + height + " format: " + format);
 	}
 	
 	int getRenderBuffer() {
