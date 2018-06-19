@@ -1,5 +1,7 @@
 package org.vrhel.graphics;
 
+import org.lwjgl.opengl.GL11;
+
 /**
  * The core class of the Graphics Engine.  Everything for general
  * function goes through this class.
@@ -25,6 +27,8 @@ public final class GraphicsEngine {
 		GraphicsWindow.create(config);
 		this.window = GraphicsWindow.getWindow();
 		ObjectBuffer.createBuffer();
+		BufferHandler.init();
+		TextureHandler.create();
 	}
 	
 	/**
@@ -56,6 +60,9 @@ public final class GraphicsEngine {
 	public static void destroy() {
 		if (engine != null) {
 			GraphicsObject.destroyAll();
+			ObjectBuffer.destroyBuffer();
+			BufferHandler.destroy();
+			TextureHandler.destroy();
 			engine = null;
 			System.gc();
 		}

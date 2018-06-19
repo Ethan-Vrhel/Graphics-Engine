@@ -2,6 +2,7 @@ package org.vrhel.graphics;
 
 import static org.vrhel.graphics.GraphicsEngine.*;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.IOException;
 
@@ -12,9 +13,7 @@ import org.joml.Vector3f;
  * 
  * @author Ethan Vrhel
  * @since 1.0
- * @deprecated Not to be used as an entry point
  */
-@Deprecated
 public class TestMain implements Runnable, GraphicsListener {
 	
 	private static GraphicsEngine engine;
@@ -27,7 +26,6 @@ public class TestMain implements Runnable, GraphicsListener {
 	
 	private static Thread t;
 	
-	@Deprecated
 	public static void main(String[] args) {
 		init(new GraphicsConfiguration(
 				new WindowProperties(null, new Dimension(1280, 720), false, true), 
@@ -120,21 +118,21 @@ public class TestMain implements Runnable, GraphicsListener {
 	public void onInit() {
 		Texture2D tex = null;
 		try {
-			tex = new Texture2D("res\\source.png", Texture.LINEAR);
+			tex = new Texture2D("res\\tex2.png", Texture.LINEAR);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Texture2D tex2 = null;
 		try {
-			tex2 = new Texture2D("res\\flare_small.png", Texture.LINEAR);
+			tex2 = new Texture2D("res\\tex.png", Texture.LINEAR);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Texture2D tex3 = null;
 		try {
-			tex3 = new Texture2D("res\\flare_large.png", Texture.LINEAR);
+			tex3 = new Texture2D("res\\tex2.png", Texture.LINEAR);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,7 +140,7 @@ public class TestMain implements Runnable, GraphicsListener {
 		
 		Texture2D tex4 = null;
 		try {
-			tex4 = new Texture2D("res\\flare_verylarge.png", Texture.LINEAR);
+			tex4 = new Texture2D("res\\tex3.png", Texture.LINEAR);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,8 +155,20 @@ public class TestMain implements Runnable, GraphicsListener {
 
 		VBOObject obj5;
 		
+		int w = getEngine().getConfiguration().getWindowProperties().getResolution().width;
+		int h = getEngine().getConfiguration().getWindowProperties().getResolution().height;
+		int id = BufferHandler.getHandler().genBuffer("Test-Buffer", w, h, Shader.defaultShader, new Buffer.ClearFlag(0f, 0.5f, 0f, 0f));
+		//int id2 = BufferHandler.getHandler().genBuffer("Test-Buffer2", w, h, Shader.defaultShader, new Buffer.ClearFlag(1f, 0f, 0f, 0f));
+		
+		//BufferHandler.getHandler().bind(BufferHandler.UNBIND);
+		
+		//BufferHandler.getHandler().bind(id);
+		//BufferHandler.getHandler().bind(id2);
 		obj = VBOObjectFactory.newObject(1f, 1f, -10, tex, new UseableShader(new TransformData(0, 0, 0, 256)), new TextureTransform());
 		obj2 = VBOObjectFactory.newObject(1f, 1f, 10, tex2, new UseableShader(new TransformData(0, 0, 0, 96)), new TextureTransform());
+		
+		//BufferHandler.getHandler().bind(BufferHandler.UNBIND);
+		BufferHandler.getHandler().bind(id);
 		obj3 = VBOObjectFactory.newObject(1f, 1f, 10, tex3, new UseableShader(new TransformData(0, 0, 0, 128)), new TextureTransform());
 		obj4 = VBOObjectFactory.newObject(1f, 1f, 10, tex4, new UseableShader(new TransformData(0, 0, 0, 512)), new TextureTransform());
 		obj5 = VBOObjectFactory.newObject(1f, 1f, 0, tex5, new UseableShader(new TransformData(0, -1256, 0, 2048)), new TextureTransform());
@@ -168,6 +178,7 @@ public class TestMain implements Runnable, GraphicsListener {
 		obj3.setShouldDraw(true);
 		obj4.setShouldDraw(true);
 		obj5.setShouldDraw(true);
+	
 	}
 
 	@Override

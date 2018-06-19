@@ -16,16 +16,27 @@ class ObjectBuffer {
 	public static final boolean CULL_ON_ADD		= false,
 								SORT_ON_ADD		= true;
 
+	// The default buffer
 	private static ObjectBuffer buffer;
 	
 	private ArrayList<RenderableObject> objs;
+	private UseableShader shader;
 	
 	RenderListener list;
 	
-	private ObjectBuffer() {
+	ObjectBuffer() {
 		objs = new ArrayList<RenderableObject>();
 	}
 	
+	ObjectBuffer(UseableShader shader) {;
+		this.shader = shader;
+	}
+	
+	/**
+	 * Creates the default object buffer.
+	 * 
+	 * @throws UnsupportedOperationException When it already exists.
+	 */
 	static void createBuffer() throws UnsupportedOperationException {
 		if (buffer != null)
 			throw new UnsupportedOperationException("Cannot create new object buffer");
@@ -54,10 +65,6 @@ class ObjectBuffer {
 			objs.sort(RenderableObject.RenderableZComparator);
 		if (CULL_ON_ADD)
 			cull();
-	}
-	
-	void remove(RenderableObject obj) {
-		
 	}
 	
 	void cull() {
@@ -95,10 +102,21 @@ class ObjectBuffer {
 			objs.sort(RenderableObject.RenderableZComparator);
 		//if (objs.size() == 0)
 		//	System.out.println("nothing rendering!");
+		int num = 0;
 		for (int i = 0; i < objs.size(); i++) {
 			if (objs.get(i) != null) {
-				objs.get(i).render();
+				objs.get(i).render(shader);
+				num++;
 			}
 		}
+		//System.out.println("rendered: " + num + " to buffer: " + this);
+	}
+	
+	@Override
+	public String toString() {
+		if (this != buffer)
+			return "ObjectBuffer: " + Integer.toHexString(super.hashCode());
+		else
+			return "ObjectBuffer: " + Integer.toHexString(super.hashCode()) + " (DEFAULT)";
 	}
 }

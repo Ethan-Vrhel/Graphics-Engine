@@ -54,6 +54,20 @@ public final class VBOObject extends RenderableObject {
 
 	@Override
 	void render() {
+		render(shader);
+	}
+
+	@Override
+	void destroy() {
+		model = null;
+		tex = null;
+		shader = null;
+	}
+
+	@Override
+	void render(UseableShader shader) {
+		if (shader == null)
+			shader = this.shader;
 		if (tex == null) {
 			model.render();
 		} else {
@@ -66,12 +80,5 @@ public final class VBOObject extends RenderableObject {
 			}
 			model.render();
 		}
-	}
-
-	@Override
-	void destroy() {
-		model = null;
-		tex = null;
-		shader = null;
 	}
 }

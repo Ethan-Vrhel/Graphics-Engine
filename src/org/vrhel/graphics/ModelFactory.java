@@ -12,7 +12,8 @@ public class ModelFactory {
 	private ModelFactory() { }
 	
 	/**
-	 * Creates a new <code>Model</code>.
+	 * Creates a new <code>Model</code> of a
+	 * rectangular shape.
 	 * 
 	 * @param width The width.
 	 * @param height The height.
@@ -49,7 +50,8 @@ public class ModelFactory {
 	}
 	
 	/**
-	 * Creates a new <code>Model</code>.
+	 * Creates a new <code>Model</code> of a specific
+	 * shape.
 	 * 
 	 * @param shape The shape.
 	 * @param param The shape parameters.

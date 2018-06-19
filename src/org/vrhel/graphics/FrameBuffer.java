@@ -8,7 +8,10 @@ final class FrameBuffer {
 	
 	FrameBuffer() {
 		fbo = glGenFramebuffers();
-		System.out.println("Genreated framebuffer: " + fbo);
+	}
+	
+	void destroy() {
+		glDeleteFramebuffers(fbo);
 	}
 	
 	void bind(int type) {
@@ -35,5 +38,10 @@ final class FrameBuffer {
 	void detachRenderbuffer(int target, int attach) {
 		bind(GL_FRAMEBUFFER);
 		glFramebufferRenderbuffer(target, attach, GL_RENDERBUFFER, 0);
+	}
+	
+	@Override
+	public String toString() {
+		return getClass() + ": " + fbo;
 	}
 }

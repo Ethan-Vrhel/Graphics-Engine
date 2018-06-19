@@ -64,4 +64,9 @@ public final class QuadObject extends RenderableObject {
 		texture = null;
 		data = null;
 	}
+
+	@Override
+	void render(UseableShader shader) {
+		render();
+	}
 }

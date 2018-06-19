@@ -36,7 +36,16 @@ abstract class RenderableObject extends GraphicsObject implements Cloneable, Com
 		this.zBuffer = zBuffer;
 		this.width = width;
 		this.height = height;
-		ObjectBuffer.getBuffer().add(this);
+		Buffer buffer = BufferHandler.getHandler().getBoundBuffer();
+		if (buffer == null) {
+			ObjectBuffer.getBuffer().add(this);
+		} else {
+			ObjectBuffer objBuffer = buffer.getObjectBuffer();
+			if (objBuffer != null) {
+				buffer.getObjectBuffer().add(this);
+			} else
+				ObjectBuffer.getBuffer().add(this);
+		}
 	}
 	
 	/**
@@ -156,8 +165,19 @@ abstract class RenderableObject extends GraphicsObject implements Cloneable, Com
 	
 	/**
 	 * Draws the object.
+	 * 
+	 * @deprecated <code>render(UseableShader);</code> should
+	 * be used instead.
 	 */
+	@Deprecated
 	abstract void render();
+	
+	/**
+	 * Draws the object with a shader.
+	 * 
+	 * @param shader The shader.
+	 */
+	abstract void render(UseableShader shader);
 	
 	@Override
 	abstract void destroy();

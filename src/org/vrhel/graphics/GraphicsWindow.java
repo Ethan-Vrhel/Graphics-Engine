@@ -5,6 +5,9 @@ import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
+import org.vrhel.graphics.Buffer.ClearFlag;
+
+import java.awt.Color;
 import java.nio.*;
 import java.util.ArrayList;
 
@@ -12,6 +15,7 @@ import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL40.*;
 import static org.lwjgl.opengl.EXTFramebufferObject.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -203,6 +207,9 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 		// Set the clear color
 		glClearColor(0.529f, 0.808f, 0.922f, 0.0f);
 		
+		int w = properties.getResolution().width;
+		int h = properties.getResolution().height;
+		
 		for (int i = 0; i < listeners.size(); i++) {
 			listeners.get(i).onInit();
 		}
@@ -224,11 +231,15 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 		
-		int w = properties.getResolution().width;
-		int h = properties.getResolution().height;
-		RenderBuffer ren = new RenderBuffer(w, h, GL_RGBA);
-		FrameBuffer buff = new FrameBuffer();
-		buff.attachRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ren);
+		
+
+		
+		//RenderBuffer ren = new RenderBuffer(w, h, GL_RGBA);
+		//FrameBuffer buff = new FrameBuffer();
+		//buff.attachRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ren);
+		
+		
+		//Buffer buff = BufferHandler.getHandler().getBuffer(0);
 		
 		doneInit = true;
 		while (! glfwWindowShouldClose(window)) {
@@ -236,20 +247,24 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 			
 			
 			if (camera != null) {
-				buff.bind(GL_DRAW_FRAMEBUFFER);
+				//buff.getFrameBuffer().bind(GL_DRAW_FRAMEBUFFER);
 	
-				glClear(GL_COLOR_BUFFER_BIT);
-				render();
+				//glClear(GL_COLOR_BUFFER_BIT);
+				BufferHandler.getHandler().render();
+				//render();
 
 				
-				buff.bind(GL_READ_FRAMEBUFFER);
-				buff.unbind(GL_DRAW_FRAMEBUFFER);
-
-				glClearColor(0.5f, 0.5f, 1f, 1.0f);
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+				//buff.getFrameBuffer().bind(GL_READ_FRAMEBUFFER);
+				//buff.getFrameBuffer().unbind(GL_DRAW_FRAMEBUFFER);
 				
-				glBlitFramebuffer(0, 0, w, h, 0, 0, w, h,
-						GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+				//glClearColor(0.5f, 0.5f, 1f, 1.0f);
+				//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+				//ObjectBuffer.getBuffer().render();
+				//render();
+				
+				//glBlitFramebuffer(0, 0, w, h, 0, 0, w, h,
+				//		GL_COLOR_BUFFER_BIT, GL_NEAREST);
 				
 				glfwSwapBuffers(window);
 			}
