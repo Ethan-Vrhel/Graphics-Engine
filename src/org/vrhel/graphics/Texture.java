@@ -68,7 +68,7 @@ public abstract class Texture {
 	 * this texture is bound with OpenGL.
 	 */
 	protected void destroy() {
-		GL11.glDeleteTextures(texid);
+		glDeleteTextures(texid);
 	}
 
 	@Override

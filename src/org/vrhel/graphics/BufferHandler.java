@@ -10,7 +10,7 @@ import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL40.*;
-
+import static org.lwjgl.opengl.GL45.*;
 /**
  * The <code>BufferHandler</code> handles
  * the storage of Framebuffers and
@@ -72,10 +72,18 @@ public class BufferHandler {
 		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 		//ObjectBuffer.getBuffer().render();
 		
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+		glClearColor(0.5f, 0.5f, 1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+		ObjectBuffer.getBuffer().render();
+		
 		for (int i = 0; i < buffers.size(); i++) {
 			if (buffers.get(i) != null) {
 				if (buffers.get(i).isEnabled()) {
 					//System.out.println("Drawing to: " + buffers.get(i));
+					buffers.get(i).render();
+					Buffer buff = buffers.get(i);
 					FrameBuffer fbo = buffers.get(i).getFrameBuffer();
 					RenderBuffer rbo = buffers.get(i).getRenderBuffer();
 					Buffer.ClearFlag flag = buffers.get(i).getClearFlag();
@@ -83,51 +91,34 @@ public class BufferHandler {
 					fbo.bind(GL_DRAW_FRAMEBUFFER);
 					fbo.unbind(GL_READ_FRAMEBUFFER);
 					
-					glBlendFuncSeparatei(fbo.getFBO(), GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+					//glBlendFuncSeparatei(fbo.getFBO(), GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 					
-					if (i == 0) {
+					//if (i == 0) {
 						clear(buffers.get(i));
-					}
+					//}
 					buffers.get(i).getObjectBuffer().render();
 					
 					fbo.bind(GL_READ_FRAMEBUFFER);
-					fbo.unbind(GL_DRAW_FRAMEBUFFER);
-					
-					if (i < buffers.size() - 1) {
-						FrameBuffer fbo2 = buffers.get(i + 1).getFrameBuffer();
-						RenderBuffer rbo2 = buffers.get(i + 1).getRenderBuffer();
-						fbo2.bind(GL_DRAW_FRAMEBUFFER);
-						fbo2.unbind(GL_READ_FRAMEBUFFER);
-							
-						clear(buffers.get(i + 1));
-						
-						//System.out.println("blit to: " + buffers.get(i + 1));
-						//glBlendFuncSeparatei(fbo.getFBO(), GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_DST_ALPHA);
-						glBlitFramebuffer(0, 0, rbo2.getWidth(), rbo2.getHeight(), 0, 0, rbo2.getWidth(), rbo2.getHeight(),
-								GL_COLOR_BUFFER_BIT, GL_NEAREST);
-						
-						fbo2.unbind(GL_DRAW_FRAMEBUFFER);
-						fbo2.unbind(GL_READ_FRAMEBUFFER);
-					}
-				
-					
+					fbo.unbind(GL_DRAW_FRAMEBUFFER);					
 					
 					//fbo.unbind(GL_READ_FRAMEBUFFER);
+					
+					glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+//					glClearColor(0.5f, 0.5f, 1f, 1.0f);
+//					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+//					ObjectBuffer.getBuffer().render();
+				
+					//FrameBuffer fbo = buffers.get(0).getFrameBuffer();
+					//RenderBuffer rbo = buffers.get(0).getRenderBuffer();
+					//glBlendFuncSeparatei(0, GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_DST_ALPHA);
+					glEnable(GL_BLEND);
+					glBlendFunci(fbo.getFBO(), GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBlitFramebuffer(0, 0, rbo.getWidth(), rbo.getHeight(), buff.getX(), buff.getY(), buff.getX() + rbo.getWidth(), buff.getY() + rbo.getHeight(),
+						GL_COLOR_BUFFER_BIT, GL_NEAREST);		
 				}
 			}
-		}
-		
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-		
-		glClearColor(0.5f, 0.5f, 1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-		ObjectBuffer.getBuffer().render();
-
-		//glBlendFuncSeparatei(0, GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_DST_ALPHA);
-		//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-		glBlitFramebuffer(0, 0, 1280, 720, 0, 0, 1280 / 2, 720 / 2,
-				GL_COLOR_BUFFER_BIT, GL_NEAREST);
-		
+		}	
 	}
 	
 	private void clear(Buffer buff) {
@@ -137,7 +128,7 @@ public class BufferHandler {
 			
 			
 			
-			glClearColor(0f,0f,1f,0f);
+			glClearColor(flag.r,flag.g,flag.b,flag.a); // Color to clear with
 	
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
@@ -162,7 +153,29 @@ public class BufferHandler {
 	 * @return The new <code>Buffer</code>.
 	 */
 	public int genBuffer(String name, int width, int height, Shader shader, Buffer.ClearFlag flag) {
-		Buffer buff = Buffer.genBuffer(name, width, height, shader, flag);
+		return genBuffer(name, 0, 0, width, height, shader, flag);
+	}
+	
+	/**
+	 * Generates a new <code>Buffer</code>.  The
+	 * order of generation matters, so those generated
+	 * later will be used after the ones generated
+	 * earlier.
+	 * 
+	 * @param name The name of the <code>Buffer</code>.
+	 * <code>null</code> indicates a default name.
+	 * @param x The x position of the buffer.
+	 * @param y The y position of the buffer.
+	 * @param width The width of the buffer.
+	 * @param height The height of the buffer.
+	 * @param shader The associated shader.  <code>null</code>
+	 * specifies that no shader will be used.
+	 * @param flag The <code>ClearFlag</code> that represents
+	 * how the buffer will clear on each update.
+	 * @return The new <code>Buffer</code>.
+	 */
+	public int genBuffer(String name, int x, int y, int width, int height, Shader shader, Buffer.ClearFlag flag) {
+		Buffer buff = Buffer.genBuffer(name, x, y, width, height, shader, flag);
 		buffers.add(buff);
 		return buff.getID();
 	}

@@ -80,6 +80,26 @@ public final class Texture2D extends Texture {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 	}
 	
+	/**
+	 * Creates a blank texture.
+	 * 
+	 * @param width The width.
+	 * @param height The height.
+	 */
+	public Texture2D(int width, int height, int filter) {
+		this.width = width;
+		this.height = height;
+		id = glGenTextures();
+		bind();
+		// GL_LINEAR or GL_NEAREST
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+		
+		//glDepthMask(GL_FALSE);
+		
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	}
+	
 	@Override
 	public int width() {
 		return width;
