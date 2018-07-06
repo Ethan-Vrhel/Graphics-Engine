@@ -2,11 +2,12 @@ package org.vrhel.graphics;
 
 import java.util.ArrayList;
 
-class AbstractBufferHandler {
+public class AbstractBufferHandler {
 
 	private static AbstractBufferHandler handler;
 	
 	private ArrayList<AbstractBuffer> buffers;
+	private AbstractBuffer boundBuffer;
 	
 	private AbstractBufferHandler() { 
 		buffers = new ArrayList<AbstractBuffer>();
@@ -16,7 +17,7 @@ class AbstractBufferHandler {
 		handler = new AbstractBufferHandler();
 	}
 	
-	static AbstractBufferHandler getHandler() {
+	public static AbstractBufferHandler getHandler() {
 		return handler;
 	}
 	
@@ -26,6 +27,51 @@ class AbstractBufferHandler {
 	}
 	
 	private void destroy() {
-		
+		for (int i = 0; i < buffers.size(); i++) {
+			if (buffers.get(i) != null) {
+				buffers.get(i).destroy();
+				buffers.set(i, null);
+			}
+		}
+		buffers = null;
+	}
+	
+	void add(AbstractBuffer buffer) {
+		if (! buffers.contains(buffer))
+			buffers.add(buffer);
+	}
+	
+	AbstractBuffer get(int id) {
+		for (int i = 0; i < buffers.size(); i++) {
+			if (buffers.get(i) != null) {
+				if (buffers.get(i).getID() == id)
+					return buffers.get(i);
+			}
+		}
+		return null;
+	}
+	
+	void render() {
+		for (int i = 0; i < buffers.size(); i++) {
+			if (buffers.get(i) != null) {
+				if (buffers.get(i).isEnabled()) {
+					buffers.get(i).render();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Binds a buffer to which objects will
+	 * be added to the buffer.
+	 * 
+	 * @param id The buffer's id.
+	 */
+	public void bind(int id) {
+		boundBuffer = buffers.get(id);
+	}
+	
+	AbstractBuffer getBoundBuffer() {
+		return boundBuffer;
 	}
 }

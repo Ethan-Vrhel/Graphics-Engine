@@ -27,6 +27,8 @@ public final class GraphicsEngine {
 		GraphicsWindow.create(config);
 		this.window = GraphicsWindow.getWindow();
 		ObjectBuffer.createBuffer();
+		AbstractBufferHandler.init();
+		TextureBufferHandler.init();
 		BufferHandler.init();
 		TextureHandler.create();
 	}

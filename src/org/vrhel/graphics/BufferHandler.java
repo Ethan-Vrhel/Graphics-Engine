@@ -45,13 +45,7 @@ public class BufferHandler {
 	}
 	
 	static void destroy() {
-		for (int i = 0; i < handler.buffers.size(); i++) {
-			if (handler.buffers.get(i) != null) {
-				handler.buffers.get(i).destroy();
-			}
-		}
-		handler.buffers = null;
-		handler = null;
+		
 	}
 	
 	/**
@@ -68,74 +62,33 @@ public class BufferHandler {
 	}
 	
 	void render() {
-		//glClearColor(0.5f, 0.5f, 1f, 1.0f);
-		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-		//ObjectBuffer.getBuffer().render();
-		
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
-		glClearColor(0.5f, 0.5f, 1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-		ObjectBuffer.getBuffer().render();
+//		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+//
+//		glClearColor(0.5f, 0.5f, 1f, 1.0f);
+//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+//		ObjectBuffer.getBuffer().render();
 		
 		for (int i = 0; i < buffers.size(); i++) {
 			if (buffers.get(i) != null) {
 				if (buffers.get(i).isEnabled()) {
 					//System.out.println("Drawing to: " + buffers.get(i));
 					buffers.get(i).render();
-					Buffer buff = buffers.get(i);
-					FrameBuffer fbo = buffers.get(i).getFrameBuffer();
-					RenderBuffer rbo = buffers.get(i).getRenderBuffer();
-					Buffer.ClearFlag flag = buffers.get(i).getClearFlag();
-					
-					fbo.bind(GL_DRAW_FRAMEBUFFER);
-					fbo.unbind(GL_READ_FRAMEBUFFER);
-					
-					//glBlendFuncSeparatei(fbo.getFBO(), GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-					
-					//if (i == 0) {
-						clear(buffers.get(i));
-					//}
-					buffers.get(i).getObjectBuffer().render();
-					
-					fbo.bind(GL_READ_FRAMEBUFFER);
-					fbo.unbind(GL_DRAW_FRAMEBUFFER);					
-					
-					//fbo.unbind(GL_READ_FRAMEBUFFER);
-					
-					glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-
-//					glClearColor(0.5f, 0.5f, 1f, 1.0f);
-//					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-//					ObjectBuffer.getBuffer().render();
-				
-					//FrameBuffer fbo = buffers.get(0).getFrameBuffer();
-					//RenderBuffer rbo = buffers.get(0).getRenderBuffer();
-					//glBlendFuncSeparatei(0, GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_DST_ALPHA);
-					glEnable(GL_BLEND);
-					glBlendFunci(fbo.getFBO(), GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					glBlitFramebuffer(0, 0, rbo.getWidth(), rbo.getHeight(), buff.getX(), buff.getY(), buff.getX() + rbo.getWidth(), buff.getY() + rbo.getHeight(),
-						GL_COLOR_BUFFER_BIT, GL_NEAREST);		
+//					Buffer buff = buffers.get(i);
+//					FrameBuffer fbo = buffers.get(i).getFrameBuffer();
+//					RenderBuffer rbo = buffers.get(i).getRenderBuffer();
+//					
+//					glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+//
+//					//glEnable(GL_BLEND);
+//					glBlendFunci(fbo.getFBO(), GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//					glBlitFramebuffer(0, 0, rbo.getWidth(), rbo.getHeight(), buff.getX(), buff.getY(), buff.getX() + rbo.getWidth(), buff.getY() + rbo.getHeight(),
+//						GL_COLOR_BUFFER_BIT, GL_NEAREST);		
 				}
 			}
 		}	
 	}
-	
-	private void clear(Buffer buff) {
-		Buffer.ClearFlag flag = buff.getClearFlag();
-		if (flag != null) {
-			buff.getFrameBuffer().bind(GL_DRAW_FRAMEBUFFER);
-			
-			
-			
-			glClearColor(flag.r,flag.g,flag.b,flag.a); // Color to clear with
-	
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			
-			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-		}
-	}
-	
+
 	/**
 	 * Generates a new <code>Buffer</code>.  The
 	 * order of generation matters, so those generated

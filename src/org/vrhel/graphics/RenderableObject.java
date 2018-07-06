@@ -36,7 +36,7 @@ abstract class RenderableObject extends GraphicsObject implements Cloneable, Com
 		this.zBuffer = zBuffer;
 		this.width = width;
 		this.height = height;
-		Buffer buffer = BufferHandler.getHandler().getBoundBuffer();
+		AbstractBuffer buffer = AbstractBufferHandler.getHandler().getBoundBuffer();
 		if (buffer == null) {
 			ObjectBuffer.getBuffer().add(this);
 		} else {

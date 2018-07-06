@@ -250,7 +250,15 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 				//buff.getFrameBuffer().bind(GL_DRAW_FRAMEBUFFER);
 	
 				//glClear(GL_COLOR_BUFFER_BIT);
-				BufferHandler.getHandler().render();
+				//BufferHandler.getHandler().render();
+				
+				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+				glClearColor(0.5f, 0.5f, 1f, 1.0f);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+				ObjectBuffer.getBuffer().render();
+				
+				AbstractBufferHandler.getHandler().render();
 				//render();
 
 				

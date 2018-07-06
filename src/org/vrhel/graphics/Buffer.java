@@ -3,6 +3,10 @@ package org.vrhel.graphics;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.GL_COLOR_ATTACHMENT0;
 import static org.lwjgl.opengl.GL30.GL_DRAW_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.GL_READ_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.glBindFramebuffer;
+import static org.lwjgl.opengl.GL30.glBlitFramebuffer;
+import static org.lwjgl.opengl.GL40.glBlendFunci;
 
 import java.awt.Color;
 
@@ -50,7 +54,6 @@ public final class Buffer extends AbstractBuffer {
 	}
 
 	private String name;
-	private boolean enabled;
 	private FrameBuffer fbo;
 	private RenderBuffer rbo;
 	private ClearFlag flag;
@@ -69,7 +72,6 @@ public final class Buffer extends AbstractBuffer {
 		if (name == null)
 			name = "Buffer-" + this.id;
 		this.name = name;
-		this.enabled = true;
 		fbo = new FrameBuffer();
 		rbo = new RenderBuffer(width, height, GL_RGBA);
 		fbo.attachRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, rbo);
@@ -96,6 +98,7 @@ public final class Buffer extends AbstractBuffer {
 		return genBuffer(name, -1, x, y, width, height, shader, flag);
 	}
 	
+	@Override
 	void destroy() {
 		fbo.destroy();
 		fbo = null;
@@ -113,26 +116,6 @@ public final class Buffer extends AbstractBuffer {
 		return name;
 	}
 	
-	/**
-	 * Sets whether this buffer is enabled.
-	 * 
-	 * @param enabled Whether this buffer is
-	 * enabled.
-	 */
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-	
-	/**
-	 * Returns whether this buffer is enabled.
-	 * 
-	 * @return <code>true</code> if this buffer is
-	 * enabled and <code>false</code> otherwise.
-	 */
-	public boolean isEnabled() {
-		return enabled;
-	}
-	
 	FrameBuffer getFrameBuffer() {
 		return fbo;
 	}
@@ -141,6 +124,7 @@ public final class Buffer extends AbstractBuffer {
 		return rbo;
 	}
 	
+	@Override
 	ObjectBuffer getObjectBuffer() {
 		return buffer;
 	}
@@ -200,7 +184,27 @@ public final class Buffer extends AbstractBuffer {
 
 	@Override
 	void render() {
-		// TODO Auto-generated method stub
+		fbo.bind(GL_DRAW_FRAMEBUFFER);
+		fbo.unbind(GL_READ_FRAMEBUFFER);
+		
+		if (flag != null) {	
+			glClearColor(flag.r,flag.g,flag.b,flag.a); // Color to clear with
+	
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		}
+
+		buffer.render();
+		
+		fbo.bind(GL_READ_FRAMEBUFFER);
+		fbo.unbind(GL_DRAW_FRAMEBUFFER);
+		
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+		//glEnable(GL_BLEND);
+		glBlendFunci(fbo.getFBO(), GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBlitFramebuffer(0, 0, rbo.getWidth(), rbo.getHeight(), x, y, x + rbo.getWidth(), y + rbo.getHeight(),
+			GL_COLOR_BUFFER_BIT, GL_NEAREST);	
+		
 		
 	}
 }

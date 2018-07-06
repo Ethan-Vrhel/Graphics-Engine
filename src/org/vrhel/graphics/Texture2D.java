@@ -80,6 +80,10 @@ public final class Texture2D extends Texture {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 	}
 	
+	public Texture2D(int id) {
+		this.id = id;
+	}
+	
 	/**
 	 * Creates a blank texture.
 	 * 
