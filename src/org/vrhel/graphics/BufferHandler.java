@@ -73,7 +73,10 @@ public class BufferHandler {
 			if (buffers.get(i) != null) {
 				if (buffers.get(i).isEnabled()) {
 					//System.out.println("Drawing to: " + buffers.get(i));
+					RenderBuffer rbo = buffers.get(i).getRenderBuffer();
+					glViewport(buffers.get(i).getX(), buffers.get(i).getY(), rbo.getWidth(), rbo.getHeight());
 					buffers.get(i).render();
+					GraphicsWindow.getWindow().viewport();
 //					Buffer buff = buffers.get(i);
 //					FrameBuffer fbo = buffers.get(i).getFrameBuffer();
 //					RenderBuffer rbo = buffers.get(i).getRenderBuffer();

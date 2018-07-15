@@ -233,6 +233,7 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 		
 		
 
+		viewport();
 		
 		//RenderBuffer ren = new RenderBuffer(w, h, GL_RGBA);
 		//FrameBuffer buff = new FrameBuffer();
@@ -287,7 +288,17 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 		for (int i = 0; i < listeners.size(); i++) {
 			listeners.get(i).onClose();
 		}
-	}	 
+	}
+	
+	void viewport(int x, int y, int width, int height) {
+		if (width < 1 || height < 1)
+			viewport();
+		glViewport(x, y, width, height);
+	}
+	
+	void viewport() {
+		glViewport(0, 0, properties.getResolution().width, properties.getResolution().height);
+	}
 	
 	private void render() {
 		//System.out.println("render");

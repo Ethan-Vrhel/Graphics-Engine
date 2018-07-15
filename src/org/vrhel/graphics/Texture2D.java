@@ -3,6 +3,7 @@ package org.vrhel.graphics;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -80,7 +81,9 @@ public final class Texture2D extends Texture {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 	}
 	
-	public Texture2D(int id) {
+	public Texture2D(Dimension dim, int id) {
+		this.width = dim.width;
+		this.height = dim.height;
 		this.id = id;
 	}
 	

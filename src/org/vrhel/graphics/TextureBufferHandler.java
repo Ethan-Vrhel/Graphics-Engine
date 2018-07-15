@@ -33,6 +33,13 @@ public class TextureBufferHandler {
 	
 	private ArrayList<TextureBuffer> buffers;
 	
+	/**
+	 * Gets buffer of id <code>id</code>.
+	 * 
+	 * @param id The id of the buffer.
+	 * @return The associated buffer or <code>null</code>
+	 * if it does not exist.
+	 */
 	public TextureBuffer getBuffer(int id) {
 		for (int i = 0; i < buffers.size(); i++) {
 			if (buffers.get(i).getID() == id) {

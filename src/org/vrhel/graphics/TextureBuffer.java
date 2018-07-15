@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL40.glBlendFunci;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 /**
@@ -20,44 +21,74 @@ public class TextureBuffer extends AbstractBuffer {
 	
 	private ObjectBuffer buffer;
 	
-	int texture;
-	int renderbuffer;
-	int framebuffer;
+	private int texture;
+	private int renderbuffer;
+	private int framebuffer;
 	
-	int width;
-	int height;
+	private int width;
+	private int height;
+	
+	private FrameBuffer fbo;
+	private RenderBuffer rbo;
 	
 	TextureBuffer(int width, int height, int filter) throws RuntimeException {
+		//this.enabled = true;
 		/*fbo = new FrameBuffer();
 		
 		tex = new Texture2D(width, height, filter);
 		*/
 		this.width = width;
 		this.height = height;
-		buffer = new ObjectBuffer();
+		this.buffer = new ObjectBuffer();
 /*
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex.getID(), 0);
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
 			throw new RuntimeException("Buffer creation failed.");
 		}*/
-		int texture = glGenTextures();
+		
+		texture = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width,
 		height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-		// Create a depth buffer for our framebuffer
+		// Create a color buffer for our framebuffer
+		/*
 		renderbuffer = glGenRenderbuffers();
 		glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32F,
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA,
 		width, height);
-		// Attach the texture and depth buffer to the framebuffer
+		// Attach the texture and color buffer to the framebuffer
 		framebuffer = glGenFramebuffers();
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer);
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,
 		GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 		glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER,
-		GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderbuffer);
-		glEnable(GL_DEPTH_TEST);
+		GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderbuffer);
+		//glEnable(GL_DEPTH_TEST);
+		 */
 		
+		framebuffer = glGenFramebuffers();
+		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+		
+		
+		
+		System.out.println("generated texture     : " + texture);
+		System.out.println("generated framebuffer : " + framebuffer);
+		//System.out.println("generated renderbuffer: " + renderbuffer);
+		
+		/*AbstractBufferHandler.getHandler().bind(id);
+		VBOObject obj5 = VBOObjectFactory.newObject(1f, 1f, 0, new Texture2D(6), new UseableShader(new TransformData(0, 0, 0, 640)), new TextureTransform());
+		obj5.setShouldDraw(true);
+		AbstractBufferHandler.getHandler().bind(-1);*/
+		
+		// Testing clearing the texture with a color
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer);
+		
+		// Sets the viewport to be relative to the texture
+		glViewport(0, 0, width, height);
+		
+		glClearColor(1,0,0,0.5f);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 	
 	@Override
@@ -83,39 +114,32 @@ public class TextureBuffer extends AbstractBuffer {
 
 	@Override
 	void render() {
-		/*
-		fbo.bind(GL_DRAW_FRAMEBUFFER);
-		fbo.unbind(GL_READ_FRAMEBUFFER);
-		
-		System.out.println("rendering to texture");
-		
-		//if (flag != null) {	
-			glClearColor(0,0,0,1); // Color to clear with
-	
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//}
-
-		buffer.render();
-		
-		fbo.bind(GL_READ_FRAMEBUFFER);
-		fbo.unbind(GL_DRAW_FRAMEBUFFER);
-		*/
-		
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer);
-		glViewport(0, 0, width, height);
-		glClearColor(1,1,1,1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		buffer.render();
-		//...
-		//Generate mipmaps of our texture
-		glGenerateMipmap(GL_TEXTURE_2D);
-		glEnable(GL_TEXTURE_2D);
 		
-//		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		// Sets the viewport to be relative to the texture
+		glViewport(0, 0, width, height);
+		
+		glClearColor(1,0,0,1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		
+		//sSystem.out.println("drew to framebuffer: " + framebuffer);
+		//glGenerateMipmap(GL_TEXTURE_2D);
+		//glEnable(GL_TEXTURE_2D);
+		buffer.render();
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		
+		// Resets the viewport
+		GraphicsWindow.getWindow().viewport();
+		
+		
+		
+//		glEnable(GL_TEXTURE_2D);
+//		
+//		
 //
-//		//glEnable(GL_BLEND);
-//		glBlendFunci(fbo.getFBO(), GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//		glBlitFramebuffer(0, 0, tex.width(), tex.height(), 0, 0, tex.width(), tex.height(),
+//		glEnable(GL_BLEND);
+//		glBlendFunci(framebuffer, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//		glBlitFramebuffer(0, 0, width, height, 0, 0, width, height,
 //			GL_COLOR_BUFFER_BIT, GL_NEAREST);	
 	}
 }

@@ -68,7 +68,17 @@ public class AbstractBufferHandler {
 	 * @param id The buffer's id.
 	 */
 	public void bind(int id) {
-		boundBuffer = buffers.get(id);
+		if (id < 0)
+			boundBuffer = null;
+		for (int i = 0; i < buffers.size(); i++) {
+			if (buffers.get(i) != null) {
+				if (buffers.get(i).getID() == id) {
+					boundBuffer = buffers.get(id);
+					return;
+				}
+			}
+		}
+		
 	}
 	
 	AbstractBuffer getBoundBuffer() {

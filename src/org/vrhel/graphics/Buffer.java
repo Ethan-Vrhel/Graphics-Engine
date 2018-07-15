@@ -192,8 +192,13 @@ public final class Buffer extends AbstractBuffer {
 	
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
+		
+		//RenderBuffer rbo = buffers.get(i).getRenderBuffer();
+		glViewport(x, y, rbo.getWidth(), rbo.getHeight());
 
 		buffer.render();
+		
+		GraphicsWindow.getWindow().viewport();
 		
 		fbo.bind(GL_READ_FRAMEBUFFER);
 		fbo.unbind(GL_DRAW_FRAMEBUFFER);

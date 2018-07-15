@@ -65,6 +65,7 @@ class ObjectBuffer {
 			objs.sort(RenderableObject.RenderableZComparator);
 		if (CULL_ON_ADD)
 			cull();
+		System.out.println("added: " + obj + " to buffer: " + this);
 	}
 	
 	void cull() {

@@ -158,9 +158,10 @@ public class TestMain implements Runnable, GraphicsListener {
 		int w = getEngine().getConfiguration().getWindowProperties().getResolution().width;
 		int h = getEngine().getConfiguration().getWindowProperties().getResolution().height;
 		//int id = BufferHandler.getHandler().genBuffer("Test-Buffer", w / 2, h / 2, Shader.defaultShader, new Buffer.ClearFlag(0f, 0.25f, 0f, 0.25f));
-		//int id2 = BufferHandler.getHandler().genBuffer("Test-Buffer2", w / 4, h /4 , Shader.defaultShader, new Buffer.ClearFlag(0.5f, 0f, 0f, 0f));
-		int id = TextureBufferHandler.getHandler().genBuffer(500, 200, Texture.LINEAR);
-		
+		int id2 = BufferHandler.getHandler().genBuffer("Test-Buffer2", w / 4, h /4 , Shader.defaultShader, new Buffer.ClearFlag(0.5f, 0f, 0f, 0f));
+		int id = TextureBufferHandler.getHandler().genBuffer(128, 128, Texture.NEAREST);
+		//int id = TextureBufferHandler.getHandler().genBuffer(tex4);
+		//int id2 = BufferHandler.getHandler().genBuffer(name, x, y, width, height, shader, flag)
 		
 		//BufferHandler.getHandler().bind(BufferHandler.UNBIND);
 		
@@ -169,18 +170,22 @@ public class TestMain implements Runnable, GraphicsListener {
 		obj = VBOObjectFactory.newObject(1f, 1f, -10, tex, new UseableShader(new TransformData(0, 0, 0, 256)), new TextureTransform());
 		obj2 = VBOObjectFactory.newObject(1f, 1f, 10, tex2, new UseableShader(new TransformData(0, 0, 0, 96)), new TextureTransform());
 		
-		BufferHandler.getHandler().bind(BufferHandler.UNBIND);
+		AbstractBufferHandler.getHandler().bind(BufferHandler.UNBIND);
 		//BufferHandler.getHandler().bind(id2);
 		obj3 = VBOObjectFactory.newObject(1f, 1f, 10, tex3, new UseableShader(new TransformData(0, 0, 0, 128)), new TextureTransform());
+		
+		AbstractBufferHandler.getHandler().bind(id2);
 		obj4 = VBOObjectFactory.newObject(1f, 1f, 10, tex4, new UseableShader(new TransformData(0, 0, 0, 512)), new TextureTransform());
-		obj5 = VBOObjectFactory.newObject(1f, 1f, 0, new Texture2D(
-				TextureBufferHandler.getHandler().getBuffer(id).getID()), new UseableShader(new TransformData(0, -1256, 0, 2048)), new TextureTransform());
+		
+		//AbstractBufferHandler.getHandler().bind(id2);
+		AbstractBufferHandler.getHandler().bind(id2);
+		obj5 = VBOObjectFactory.newObject(1f, 1f, 0, new Texture2D(new Dimension(128, 128), 6), new UseableShader(new TransformData(0, 0, 0, 640)), new TextureTransform());
 		
 		obj.setShouldDraw(true);
 		obj2.setShouldDraw(true);
 		obj3.setShouldDraw(true);
 		obj4.setShouldDraw(true);
-		obj5.setShouldDraw(true);
+		//obj5.setShouldDraw(true);
 	
 	}
 
