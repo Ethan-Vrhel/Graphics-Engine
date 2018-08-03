@@ -18,7 +18,7 @@ public final class GraphicsVersion {
 	/**
 	 * The modifier of the version.
 	 */
-	public static final String	MODIFIER			= "pre-7";
+	public static final String	MODIFIER			= "pre-8";
 	
 //	static {
 //		System.out.println("Running graphics version: " + getVersion());

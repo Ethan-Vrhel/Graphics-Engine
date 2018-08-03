@@ -35,7 +35,7 @@ public final class Texture2D extends Texture {
 	 * @param filename The file name.
 	 * @param filter The filter to use.  Specified as
 	 * <code>Texture.LINEAR</code> or <code>Texture.NEAREST</code>.
-	 * @throws IOException When an I/O exception occurs.
+	 * @throws IOException When an I/O error occurs.
 	 */
 	public Texture2D(String filename, int filter) throws IOException {
 		this(ImageIO.read(new File(filename)), filter);
@@ -81,6 +81,13 @@ public final class Texture2D extends Texture {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 	}
 	
+	/**
+	 * Creates a texture from an already existing
+	 * texture.
+	 * 
+	 * @param dim The dimensions of the texture.
+	 * @param id The id of the texture.
+	 */
 	public Texture2D(Dimension dim, int id) {
 		this.width = dim.width;
 		this.height = dim.height;

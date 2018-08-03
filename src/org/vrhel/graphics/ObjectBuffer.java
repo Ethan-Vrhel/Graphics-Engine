@@ -106,8 +106,10 @@ class ObjectBuffer {
 		int num = 0;
 		for (int i = 0; i < objs.size(); i++) {
 			if (objs.get(i) != null) {
-				objs.get(i).render(shader);
-				num++;
+				if (objs.get(i).shouldDraw()) {
+					objs.get(i).render(shader);
+					num++;
+				}
 			}
 		}
 		//System.out.println("rendered: " + num + " to buffer: " + this);
