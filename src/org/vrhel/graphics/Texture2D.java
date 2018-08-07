@@ -95,6 +95,27 @@ public final class Texture2D extends Texture {
 	}
 	
 	/**
+	 * Creates a texture from an already existing
+	 * texture.
+	 * 
+	 * @param width The width of the texture.
+	 * @param height The height of the texture.
+	 * @param id The id of the texture.
+	 * @param filter The filtering mode of the texture,
+	 * use -1 to retain current filtering mode.
+	 */
+	public Texture2D(int width, int height, int id, int filter) {
+		this.width = width;
+		this.height = height;
+		this.id = id;
+		if (filter != -1) {
+			bind();
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+		}
+	}
+	
+	/**
 	 * Creates a blank texture.
 	 * 
 	 * @param width The width.

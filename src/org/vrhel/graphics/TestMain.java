@@ -66,6 +66,8 @@ public class TestMain implements Runnable, GraphicsListener {
 		float accel = 0.025f;
 		while (true) {
 			if (GraphicsWindow.getWindow().camera != null) {
+				//System.out.println(engine.getFPS());
+				
 				Camera camera = GraphicsWindow.getWindow().camera;
 				if (Input.getKey(Input.GLFW_KEY_RIGHT)) {
 					xvel += accel;
@@ -186,7 +188,20 @@ public class TestMain implements Runnable, GraphicsListener {
 //		obj4 = VBOObjectFactory.newObject(1f, 1f, 10, tex4, new UseableShader(new TransformData(0, 0, 0, 512)), new TextureTransform());
 		
 		// Makes a new object containing the texture buffer
-		obj5 = VBOObjectFactory.newObject(1f, 1f, 20, new Texture2D(new Dimension(128, 128), 6), new UseableShader(new TransformData(0, 0, 0, 640)), new TextureTransform());
+		/*
+		public VBOObject(Model model, int zBuffer, Texture2D tex, UseableShader shader) {
+			super(zBuffer, model.width(), model.height());
+			this.model = model;
+			this.tex = tex;
+			this.shader = shader;
+		}*/
+		//obj5 = VBOObjectFactory.newObject(1f, 1f, 20, new Texture2D(new Dimension(128, 128), 6), new UseableShader(new TransformData(0, 0, 0, 1024)), new TextureTransform());
+		
+		Model model = ModelFactory.newModelFlipped(1f, 1f, new TextureTransform());
+		obj5 = VBOObjectFactory.newObject(model, 20, new Texture2D(new Dimension(128, 128), 6), new UseableShader(new TransformData(0, 0, 0, 1024)));
+
+		
+		//obj5 = new VBOObject(model, 20, new Texture2D(new Dimension(128, 128), 6), new UseableShader(new TransformData(0, 0, 0, 640)));
 		
 		obj.setShouldDraw(true);
 		obj2.setShouldDraw(true);

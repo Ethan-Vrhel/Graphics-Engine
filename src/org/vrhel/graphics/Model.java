@@ -18,6 +18,9 @@ import org.lwjgl.opengl.GL11;
  * @since 1.0
  */
 public class Model implements Cloneable {
+	
+	public static final int X_AXIS = 0,
+							Y_AXIS = 1;
 
 	private int draw_count;
 	private int v_id;
@@ -27,6 +30,8 @@ public class Model implements Cloneable {
 	
 	private int width;
 	private int height;
+	
+	private float[] tex_coords;
 	
 	//private float[] verticies;
 	

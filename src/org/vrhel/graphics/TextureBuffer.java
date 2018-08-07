@@ -28,6 +28,7 @@ public class TextureBuffer extends AbstractBuffer {
 	private ObjectBuffer buffer;
 	
 	private int texture;
+	private Texture2D tex;
 	private int renderbuffer;
 	private int framebuffer;
 	
@@ -49,6 +50,8 @@ public class TextureBuffer extends AbstractBuffer {
 		texture = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, texture);
 		
+		tex = new Texture2D(width, height, texture, -1);
+		
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
@@ -59,8 +62,6 @@ public class TextureBuffer extends AbstractBuffer {
 		if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
 			System.err.println("Failed to configure framebuffer: " + framebuffer);
 		}
-		
-		System.out.println("configured texturebuffer: " + width + "x" + height);
 	}
 	
 	@Override
@@ -79,9 +80,13 @@ public class TextureBuffer extends AbstractBuffer {
 		//tex.destroy();
 	}
 	
-	public int getTexture() {
-		//return tex;
-		return texture;
+	/**
+	 * Gets the texture of this buffer.
+	 * 
+	 * @return The texture.
+	 */
+	public Texture2D getTexture() {
+		return tex;
 	}
 
 	@Override
