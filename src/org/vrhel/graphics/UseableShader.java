@@ -32,7 +32,11 @@ public final class UseableShader extends GraphicsObject {
 			this.stack = new AbstractShader[1];
 			this.stack[0] = new DefaultShader(new TransformData(0, 0, 0, 1));
 		} else {
-			this.stack = new AbstractShader[stack.length];
+			this.stack = new AbstractShader[stack.length + 1];
+			this.stack[0] = new DefaultShader(new TransformData(0, 0, 0, 1));
+			for (int i = 1; i < stack.length; i++) {
+				this.stack[i] = stack[i - 1];
+			}
 		}
 	}
 	
@@ -47,6 +51,15 @@ public final class UseableShader extends GraphicsObject {
 			data = new TransformData(0, 0, 0, 1);
 		this.stack = new AbstractShader[1];
 		this.stack[0] = new DefaultShader(data);
+	}
+	
+	/**
+	 * Returns the default shader.
+	 * 
+	 * @return The default shader.
+	 */
+	public DefaultShader getDefaultShader() {
+		return (DefaultShader) this.stack[0];
 	}
 	
 	/**

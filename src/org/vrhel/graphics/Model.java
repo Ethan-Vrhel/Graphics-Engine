@@ -109,6 +109,24 @@ public class Model implements Cloneable {
 		glDisableVertexAttribArray(1);
 	}
 	
+	/**
+	 * Translates the model.
+	 * 
+	 * @param x The x translation.
+	 * @param y The y translation.
+	 * @param z The z tanslation.
+	 */
+	public void translate(float x, float y, float z) {
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, v_id);
+		glTranslatef(x, y, z);
+		
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+	}
+	
 	void render() {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);

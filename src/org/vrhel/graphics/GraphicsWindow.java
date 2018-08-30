@@ -176,7 +176,7 @@ class GraphicsWindow extends GraphicsObject implements Runnable {
 		// Make the OpenGL context current
 		glfwMakeContextCurrent(window);
 		// Enable v-sync
-		if (properties.useVysnc())
+		if (properties.useVsync())
 			glfwSwapInterval(GLFW_TRUE);
 		else
 			glfwSwapInterval(GLFW_FALSE);

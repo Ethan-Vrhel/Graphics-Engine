@@ -91,7 +91,7 @@ public class WindowProperties {
 	 * @return <code>true</code> if v-sync is being used
 	 * and <code>false</code> otherwise.
 	 */
-	public boolean useVysnc() {
+	public boolean useVsync() {
 		return vysnc;
 	}
 	

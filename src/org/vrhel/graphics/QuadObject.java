@@ -38,6 +38,15 @@ public final class QuadObject extends RenderableObject {
 		ObjectBuffer.getBuffer().add(this);
 	}
 	
+	/**
+	 * Sets the transform data of this object.
+	 * 
+	 * @param data The transform data.
+	 */
+	public void setTransformData(TransformData data) {
+		this.data = data;
+	}
+	
 	@Override
 	public RenderableObject clone() {
 		QuadObject q = new QuadObject(texture, getZBuffer(), data.clone(), width, height);
