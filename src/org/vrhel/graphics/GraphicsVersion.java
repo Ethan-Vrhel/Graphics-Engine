@@ -13,7 +13,7 @@ public final class GraphicsVersion {
 	 */
 	public static final int 	VERSION_MAJOR 		= 1,
 								VERSION_MINOR 		= 2,
-								VERSION_REVISION	= 2;
+								VERSION_REVISION	= 3;
 	
 	/**
 	 * The modifier of the version.

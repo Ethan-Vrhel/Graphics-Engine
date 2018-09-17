@@ -8,12 +8,12 @@ class ObjectBuffer {
 	 * Update settings for the buffer.
 	 */
 	public static final boolean CULL_ON_UPDATE	= true,
-								SORT_ON_UPDATE	= false;
+								SORT_ON_UPDATE	= true;
 	
 	/**
 	 * Addition settings for the buffer.
 	 */
-	public static final boolean CULL_ON_ADD		= false,
+	public static final boolean CULL_ON_ADD		= true,
 								SORT_ON_ADD		= true;
 
 	// The default buffer
@@ -65,7 +65,6 @@ class ObjectBuffer {
 			objs.sort(RenderableObject.RenderableZComparator);
 		if (CULL_ON_ADD)
 			cull();
-		System.out.println("added: " + obj + " to buffer: " + this);
 	}
 	
 	void cull() {
